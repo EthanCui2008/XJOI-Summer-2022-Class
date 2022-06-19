@@ -1,0 +1,61 @@
+#include <iostream>
+#include <queue>
+#include <vector> 
+
+using namespace std; 
+
+vector<vector<int>> maze;
+vector<vector<int>> visited;
+int n; 
+
+int checkValid(int x, int y) {
+    if(x < 0 || y < 0 || x >= n || y >= n || maze[x][y] || visited[x][y]){
+        return 0;
+    }
+    return 1; 
+}
+
+struct point{
+  int x,y;
+  point(int a, int b) : x(a), y(b) {}
+};
+
+int main() {
+  maze = vector<vector<int>>(3, vector<int>(3, 0));
+  visited = vector<vector<int>>(3, vector<int>(3, 0));
+  n = maze.size(); 
+  queue<point> que; 
+  int count = 0; 
+  int dx[4] = {0,1,0,-1};
+  int dy[4] = {1, 0, -1, 0}; 
+  point p1(0,0);
+  que.push(p1);
+  visited[0][0] = 1;
+  count++;
+
+  int x,y; 
+  while (!que.empty()) {
+    point curP = que.front(); 
+    x = curP.x;
+    y = curP.y; 
+    //pop the front node 
+    que.pop(); //if not, encounter infinite loop
+
+    int nx, ny; 
+    for (int i = 0; i < 4; i++) {
+      nx = x + dx[i];
+      ny = y + dy[i];
+      
+      if (checkValid(nx, ny)) {
+          count++;  
+        	visited[nx][ny] = 1;
+    	    que.push(point(nx, ny));
+          if(nx == n-1 && ny == n-1) { break; }
+        }
+      }
+  }
+
+cout << "count is " << count<< endl; 
+
+  
+}
