@@ -1,0 +1,20 @@
+grid =[]
+for i in range(int(input())):
+  grid.append(input().split())
+
+def dfs(grid,x,y):
+  grid[x][y]="0"
+  for x1 in range(len(grid)):
+    if grid[x1][y] == "1":
+      dfs(grid,x1,y)
+  for y1 in range(len(grid[0])):
+    if grid[x][y1] == "1":
+      dfs(grid,x,y1)
+      
+count=0
+for i in range(len(grid)):
+  for j in range(len(grid[0])):
+    if grid[i][j]=="1":
+      count+=1
+      dfs(grid,i,j)
+print(count)
